@@ -46,19 +46,19 @@ const PlaidLinkComponent = () => {
             console.log('Public Token:', token);
             console.log('Metadata:', metadata);
             // Exchange public token for access token
-            fetch(`https://api.local.sally.co/v2/plaid/exchange-public-token`, {
+            fetch(`https://api.local.sally.co/v2/plaid/convert-to-account`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJfR3BnLXltaFZvdG9hQ1lKdlRXTEFoSTg4TEhsOUFrWVNlM2hTU0h2ZmNzIn0.eyJleHAiOjE3MTg4OTgyNjMsImlhdCI6MTcxODgxMTg2MywianRpIjoiMzFlMGE1ZmItMjA5ZC00MWEwLTg3NmMtYTBkZTU0NGQ2YWI5IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmxvY2FsLnNhbGx5LmNvL3JlYWxtcy9tYXN0ZXIiLCJzdWIiOiIwYjc1YmY2My04MDQ3LTQ0NWEtOWRhYi1jNmRjZDI4OGFmM2IiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJzZXNzaW9uX3N0YXRlIjoiMmZjZWIwNmItMzkxMy00Zjk5LWJhMTUtODNkNmM0MjI3Yjg0Iiwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiMmZjZWIwNmItMzkxMy00Zjk5LWJhMTUtODNkNmM0MjI3Yjg0IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJhZG1pbiBhZG1pbnMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZXZlbG9wbWVudCIsImdpdmVuX25hbWUiOiJhZG1pbiIsImZhbWlseV9uYW1lIjoiYWRtaW5zIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5hZG1pbiJ9.cvKO5zClDVjovFJbNKtRwssm1fodzftMfRIgovE3oDUD2BYmflmsHN_kV9xsLGe-FFPbCqKdD1d1cK67iwnoxY1YDeEICc9CmCpwhk9KMOYsOUV3rL5JQLrq1YaOeWHnvqRMIHtBxFmdptWp-m5bEToypWbwdZBvvE_vPrJA2HSZNwpA1CPrk9hycn0V1IX5liq1t0g-V3Gn0LKAO6xyw00RfU6-FO8uIev4K4TiVKMBLarsIGpEbqPfoGeQlg1I961U7wsUBxnAj39uy6dsIS6IO6_DvkU1o_QnWKY7IaYBZYxxo9prMcpaIlawZEZXqaqX8vJnMDUsYDbxTaBoGA`,
               },
-              body: JSON.stringify({ public_token: token })
+                body: JSON.stringify({ public_token: token, metadata: metadata })
             })
               .then(response => response.json())
               .then(data => {
-                console.log('Access Token:', data.access_token);
+                console.log('Saved account(s):', JSON.stringify(data, null, 2));
               })
-              .catch(error => console.error('Error exchanging public token:', error));
+              .catch(error => console.error('Error converting to account:', error));
           }}
           onExit={(error, metadata) => {
             console.log('Exit:', metadata);
